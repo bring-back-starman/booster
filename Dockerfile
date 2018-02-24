@@ -1,10 +1,7 @@
-FROM alpine:3.4
+FROM node:9
 
-# File Author / Maintainer
-LABEL authors="Zouhir Chahoud <zouhir@zouhir.org>"
-
-# Update & install required packages
-RUN apk add --update nodejs bash git
+RUN apt-get update
+RUN apt-get upgrade -y
 
 # Install app dependencies
 COPY package.json /www/package.json
@@ -16,11 +13,9 @@ COPY . /www
 # Set work directory to /www
 WORKDIR /www
 
-# set your port
-ENV PORT 8080
-
 # expose the port to outside world
-EXPOSE  8080
+EXPOSE 3000
 
-# start command as per package.json
+# Default CMD on run (can be override with docker-compose run)
 CMD ["npm", "start"]
+
