@@ -25,8 +25,10 @@ app.use(bodyParser.json({
 
 app.use(compression());
 
+console.log(config);
+
 // connect to db
-initializeDb((db) => {
+initializeDb(config, (db) => {
   // internal middleware
   app.use(middleware({ config, db }));
 

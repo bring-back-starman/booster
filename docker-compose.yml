@@ -1,5 +1,14 @@
 version: "2"
 services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - /data/postgres
+    restart: always
+    env_file:
+      - .env.development
   booster:
     build:
       context: ./
@@ -9,3 +18,5 @@ services:
     volumes:
       - ".:/www"
     restart: on-failure
+    depends_on:
+      - postgres
