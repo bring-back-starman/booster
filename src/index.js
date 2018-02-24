@@ -5,10 +5,8 @@ import express from 'express';
 import http from 'http';
 import morgan from 'morgan';
 
-import api from './api';
 import config from './config/config';
 import initializeDb from './db';
-import middleware from './middleware';
 
 const app = express();
 app.server = http.createServer(app);
@@ -25,16 +23,8 @@ app.use(bodyParser.json({
 
 app.use(compression());
 
-console.log(config);
-
 // connect to db
-initializeDb(config, (db) => {
-  // internal middleware
-  app.use(middleware({ config, db }));
-
-  // api router
-  app.use('/api', api({ config, db }));
-
+initializeDb(() => {
   app.server.listen(config.port, () => {
     console.log(`Started on port ${config.port} (${config.env})`);
   });
