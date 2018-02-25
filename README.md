@@ -1,6 +1,6 @@
 # Bring Back Starman | Booster
 
-Bring back starman REST API
+Bring Back Starman REST API
 
 ## Requirements
 - Docker
