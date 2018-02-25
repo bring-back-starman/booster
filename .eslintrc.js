@@ -10,5 +10,6 @@ module.exports = {
   'rules': {
     'no-console': 0,
     'no-unused-vars': 1,
+    "trailing-space": 0,
   },
 };
