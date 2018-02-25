@@ -1,33 +1,39 @@
-import bodyParser from 'body-parser';
-import compression from 'compression';
-import cors from 'cors';
-import express from 'express';
-import http from 'http';
-import morgan from 'morgan';
+const http = require('http');
+const express = require('express');
+const compress = require('compression');
+const cors = require('cors');
+const morgan = require('morgan');
+const expressGraphQL = require('express-graphql');
 
-import config from './config/config';
-import initializeDb from './db';
+const config = require('./config/vars');
+const registerModels = require('./models');
+const schema = require('./graphql/schema');
 
 const app = express();
 app.server = http.createServer(app);
 
 // logger
-app.use(morgan('dev'));
+app.use(morgan(config.logs));
 
 // 3rd party middleware
 app.use(cors());
 
-app.use(bodyParser.json({
-  limit: config.bodyLimit,
-}));
+app.use(compress());
 
-app.use(compression());
+// Attach body param to req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// connect to db
-initializeDb(() => {
+app.use('/graphql', expressGraphQL(() => ({
+  schema,
+  graphiql: process.env.NODE_ENV !== 'production',
+  pretty: process.env.NODE_ENV !== 'production',
+})));
+
+registerModels().then(() => {
   app.server.listen(config.port, () => {
     console.log(`Started on port ${config.port} (${config.env})`);
   });
 });
 
-export default app;
+module.exports = app;
