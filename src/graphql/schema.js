@@ -5,6 +5,7 @@ const { resolver } = require('graphql-sequelize');
 
 const Mission = require('../models/Mission');
 const missionType = require('./types/mission');
+const { secure } = require('./utils/secure-resolver');
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -51,19 +52,18 @@ const schema = new GraphQLSchema({
             type: GraphQLString,
             description: 'Date of the mission',
           },
-          displayDate: {
+          display_date: {
             type: GraphQLString,
             description: 'Date to display',
           },
         },
         description: 'Creates a new mission',
-        resolve(obj, { name, date, displayDate }) {
-          return Mission.create({
+        resolve: secure((obj, { name, date, displayDate }) => Mission.create({
             name,
             date,
             displayDate,
-          });
-        },
+          }),
+        ),
       },
     },
   }),

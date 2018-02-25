@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const expressGraphQL = require('express-graphql');
 
 const config = require('./config/vars');
-const registerModels = require('./models');
+const registerModels = require('./init/db');
 const schema = require('./graphql/schema');
 
 const app = express();
