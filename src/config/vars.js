@@ -20,4 +20,5 @@ module.exports = {
     port: process.env.POSTGRES_PORT,
     database: process.env.POSTGRES_DB,
   },
+  secret: process.env.JWT_SECRET || 'SecretNotSoSecret',
 };
