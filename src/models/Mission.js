@@ -5,10 +5,10 @@ const sequelize = require('../config/sequelize');
 const Mission = sequelize.define('mission', {
   name: Sequelize.STRING,
   date: Sequelize.STRING,
-  display_date: Sequelize.STRING,
+  displayDate: Sequelize.STRING,
 });
 
-Mission.associate = (models) => {
+Mission.associate = () => {
   // associations can be defined here
 };
 

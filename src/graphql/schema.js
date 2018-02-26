@@ -52,18 +52,17 @@ const schema = new GraphQLSchema({
             type: GraphQLString,
             description: 'Date of the mission',
           },
-          display_date: {
+          displayDate: {
             type: GraphQLString,
             description: 'Date to display',
           },
         },
         description: 'Creates a new mission',
         resolve: secure((obj, { name, date, displayDate }) => Mission.create({
-            name,
-            date,
-            displayDate,
-          }),
-        ),
+          name,
+          date,
+          displayDate,
+        })),
       },
     },
   }),

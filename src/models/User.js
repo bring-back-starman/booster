@@ -8,10 +8,6 @@ const User = sequelize.define('user', {
     unique: true,
   },
   password: Sequelize.STRING,
-  displayName: {
-    type: Sequelize.STRING,
-    allowNul: true,
-  },
 });
 
 User.associate = () => {

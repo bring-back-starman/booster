@@ -21,4 +21,8 @@ module.exports = {
     database: process.env.POSTGRES_DB,
   },
   secret: process.env.JWT_SECRET || 'SecretNotSoSecret',
+  merlin: {
+    email: process.env.MERLIN_EMAIL || 'merlin@bringbackstarman.com',
+    password: process.env.MERLIN_PASSWORD || 'merlin',
+  },
 };

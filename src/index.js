@@ -8,9 +8,10 @@ const passport = require('passport');
 const helmet = require('helmet');
 
 const config = require('./config/vars');
-const registerModels = require('./init/db');
+const initApp = require('./init');
 const schema = require('./graphql/schema');
-const setPassport = require('./passport/config');
+
+require('./passport/config')({ config });
 
 const app = express();
 app.server = http.createServer(app);
@@ -32,8 +33,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
-
-setPassport({ app, config });
+app.use((req, res, next) => {
+  // Overriding default behavior of blocking anonymous access (401 Unauthorized)
+  // Delegating control to GraphQL resolvers
+  passport.authenticate('jwt', { session: false }, () => {
+    next();
+  })(req, res, next);
+});
 
 app.use('/graphql', expressGraphQL(() => ({
   schema,
@@ -41,7 +47,7 @@ app.use('/graphql', expressGraphQL(() => ({
   pretty: process.env.NODE_ENV !== 'production',
 })));
 
-registerModels().then(() => {
+initApp().then(() => {
   app.server.listen(config.port, () => {
     console.log(`Started on port ${config.port} (${config.env})`);
   });
