@@ -33,13 +33,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
-app.use((req, res, next) => {
-  // Overriding default behavior of blocking anonymous access (401 Unauthorized)
-  // Delegating control to GraphQL resolvers
-  passport.authenticate('jwt', { session: false }, () => {
-    next();
-  })(req, res, next);
-});
+// app.use((req, res, next) => {
+//   // Overriding default behavior of blocking anonymous access (401 Unauthorized)
+//   // Delegating control to GraphQL resolvers
+//   passport.authenticate('jwt', { session: false }, () => {
+//     next();
+//   })(req, res, next);
+// });
+
+app.use(passport.authenticate('jwt', { session: false }));
 
 app.use('/graphql', expressGraphQL(() => ({
   schema,
