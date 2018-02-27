@@ -1,14 +1,6 @@
-const jwt = require('jsonwebtoken');
-
 const config = require('../config/vars');
 const User = require('../models/User');
-
-function handleJwtToken(user) {
-  const token = jwt.sign(user.get('id'), config.secret);
-
-  console.log('--- JWT token ---');
-  console.log(token);
-}
+const { generateJwtToken } = require('../jwt/token');
 
 module.exports = () => {
   const { email, password } = config.merlin;
@@ -20,12 +12,12 @@ module.exports = () => {
     },
   }).then((user) => {
     if (user) {
-      return handleJwtToken(user);
+      return generateJwtToken(user);
     }
 
     return User.create({
       email,
       password,
-    }).then(handleJwtToken);
+    }).then(generateJwtToken);
   });
 };
