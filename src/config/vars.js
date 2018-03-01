@@ -10,8 +10,7 @@ require('dotenv-safe').load({
 module.exports = {
   env,
   logs: env === 'production' ? 'combined' : 'dev',
-  port: process.env.PORT || 3000,
-  enable: process.env.ENABLE_API || false,
+  port: process.env.PORT,
   bodyLimit: '100kb',
   postgres: {
     username: process.env.POSTGRES_USER,
@@ -20,9 +19,9 @@ module.exports = {
     port: process.env.POSTGRES_PORT,
     database: process.env.POSTGRES_DB,
   },
-  secret: process.env.JWT_SECRET || 'SecretNotSoSecret',
+  secret: process.env.JWT_SECRET,
   merlin: {
-    email: process.env.MERLIN_EMAIL || 'merlin@bringbackstarman.com',
-    password: process.env.MERLIN_PASSWORD || 'merlin',
+    email: process.env.MERLIN_EMAIL,
+    password: process.env.MERLIN_PASSWORD,
   },
 };
