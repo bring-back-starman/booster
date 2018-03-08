@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -7,7 +7,7 @@ require('dotenv-safe').load({
   sample: path.join(__dirname, '../../.env.example'),
 });
 
-module.exports = {
+export default {
   env,
   logs: env === 'production' ? 'combined' : 'dev',
   port: process.env.PORT,
@@ -20,8 +20,4 @@ module.exports = {
     database: process.env.POSTGRES_DB,
   },
   secret: process.env.JWT_SECRET,
-  merlin: {
-    email: process.env.MERLIN_EMAIL,
-    password: process.env.MERLIN_PASSWORD,
-  },
 };

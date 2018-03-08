@@ -1,0 +1,42 @@
+type Mission {
+    id: ID!
+    name: String
+    launchNumber: Int
+    missionNumber: Int
+    date: DateRange
+    missionOutcome: String
+    patchUrl: String
+    launchVideo: String
+    description: String
+}
+
+input NewMission {
+    name: String
+    launchNumber: Int
+    missionNumber: Int
+    date: NewDateRange
+    missionOutcome: String
+    patchUrl: String
+    launchVideo: String
+    description: String
+}
+
+input NewDateRange {
+    from: String
+    to: String
+    type: String
+}
+
+type DateRange {
+    from: String
+    to: String
+    type: String
+}
+
+type Query {
+    missions(id: Int): [Mission]
+}
+
+type Mutation {
+    createMission(mission: NewMission!): Mission
+}

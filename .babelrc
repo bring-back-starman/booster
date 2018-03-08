@@ -1,3 +1,8 @@
 {
-  "presets": ["env", "stage-0"]
+  "passPerPreset": true,
+  "presets": [
+    "env",
+    "es2015",
+    "stage-0"
+  ]
 }

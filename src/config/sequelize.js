@@ -1,5 +1,5 @@
-const { Sequelize } = require('sequelize');
-const config = require('./vars');
+import { Sequelize } from 'sequelize';
+import config from './vars';
 
 const {
   username, password, database, port, host,
@@ -17,4 +17,4 @@ const sequelize = new Sequelize(database, username, password, {
   },
 });
 
-module.exports = sequelize;
+export default sequelize;

@@ -1,10 +1,14 @@
 # Bring Back Starman | Booster
 
-Bring Back Starman REST API
-
-## Requirements
-- Docker
-- Docker Compose
+Bring Back Starman GraphQL API
 
 ## Installation
-See COMMANDS.md for more
+```
+cp .env.example .env.[development | production] # edit file acordignly
+yarn
+```
+
+## Run
+```
+yarn run docker-dev #docker-prod
+```

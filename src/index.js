@@ -1,58 +1,46 @@
-const http = require('http');
-const express = require('express');
-const compress = require('compression');
-const cors = require('cors');
-const morgan = require('morgan');
-const expressGraphQL = require('express-graphql');
-const passport = require('passport');
-const helmet = require('helmet');
+import http from 'http';
+import express from 'express';
+import compress from 'compression';
+import cors from 'cors';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import printMessage from 'print-message';
+import {
+  graphqlExpress,
+  graphiqlExpress,
+} from 'graphql-server-express';
 
-const config = require('./config/vars');
-const initApp = require('./init');
-const schema = require('./graphql/schema');
+import schema from './graphql/schema';
+import config from './config/vars';
+import { db } from './init/db';
 
-require('./passport/config')({ config });
 
-const app = express();
-app.server = http.createServer(app);
+const start = async () => {
+  await db.sync();
+  const app = express();
+  app.server = http.createServer(app);
 
-// logger
-app.use(morgan(config.logs));
+  app.use(morgan(config.logs));
+  app.use(cors());
+  app.use(helmet());
+  app.use(compress());
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-// 3rd party middleware
-app.use(cors());
+  app.use('/graphql', graphqlExpress({ schema }));
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-// Add HTTP headers
-app.use(helmet());
-
-// gzip compress
-app.use(compress());
-
-// Attach body param to req.body
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(passport.initialize());
-// app.use((req, res, next) => {
-//   // Overriding default behavior of blocking anonymous access (401 Unauthorized)
-//   // Delegating control to GraphQL resolvers
-//   passport.authenticate('jwt', { session: false }, () => {
-//     next();
-//   })(req, res, next);
-// });
-
-app.use(passport.authenticate('jwt', { session: false }));
-
-app.use('/graphql', expressGraphQL(() => ({
-  schema,
-  graphiql: process.env.NODE_ENV !== 'production',
-  pretty: process.env.NODE_ENV !== 'production',
-})));
-
-initApp().then(() => {
   app.server.listen(config.port, () => {
-    console.log(`Started on port ${config.port} (${config.env})`);
+    printMessage([
+      `Started on port ${config.port} (${config.env})`,
+      '',
+      `GraphQL endpoint:  http://localhost:${config.port}/graphql`,
+      `GraphiQL endpoint: http://localhost:${config.port}/graphiql`,
+    ], {
+      marginTop: 1,
+      marginBottom: 1,
+    });
   });
-});
+};
 
-module.exports = app;
+start();

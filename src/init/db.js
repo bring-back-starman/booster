@@ -1,10 +1,4 @@
-const sequelize = require('../config/sequelize');
+import db from '../config/sequelize';
+import Mission from '../model/Mission';
 
-module.exports = () => new Promise((resolve) => {
-  console.log('Syncing database...');
-
-  sequelize.sync().then(() => {
-    console.log('Database successfully synced !');
-    resolve();
-  });
-});
+export { db, Mission };
