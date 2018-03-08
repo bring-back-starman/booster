@@ -34,7 +34,8 @@ type DateRange {
 }
 
 type Query {
-    missions(id: Int): [Mission]
+    mission(id: ID!): Mission
+    missions: [Mission]
 }
 
 type Mutation {

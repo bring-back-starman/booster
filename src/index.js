@@ -10,7 +10,8 @@ import {
   graphiqlExpress,
 } from 'graphql-server-express';
 
-import schema from './graphql/schema';
+import auth from './auth/auth';
+import graphQLOptions from './graphql/schema';
 import config from './config/vars';
 import { db } from './init/db';
 
@@ -26,9 +27,10 @@ const start = async () => {
   app.use(compress());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(auth.initialize());
 
-  app.use('/graphql', graphqlExpress({ schema }));
-  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+  app.use('/graphql', auth.authenticate(), graphqlExpress(graphQLOptions));
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql', passHeader: `"Authorization": "Bearer ${auth.token}"` }));
 
   app.server.listen(config.port, () => {
     printMessage([
@@ -36,6 +38,8 @@ const start = async () => {
       '',
       `GraphQL endpoint:  http://localhost:${config.port}/graphql`,
       `GraphiQL endpoint: http://localhost:${config.port}/graphiql`,
+      '',
+      `Token: ${auth.token}`,
     ], {
       marginTop: 1,
       marginBottom: 1,

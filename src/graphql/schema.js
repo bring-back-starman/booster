@@ -3,7 +3,14 @@ import glue from 'schemaglue';
 
 const { schema, resolver } = glue('src/graphql');
 
-export default makeExecutableSchema({
+const executableSchema = makeExecutableSchema({
   typeDefs: schema,
   resolvers: resolver,
+});
+
+export default req => ({
+  schema: executableSchema,
+  context: {
+    user: req.user,
+  }
 });
