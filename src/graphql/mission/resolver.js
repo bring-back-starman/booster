@@ -1,3 +1,4 @@
+import { authenticatedOnly } from '../helpers';
 import { Mission } from '../../init/db';
 
 // eslint-disable-next-line import/prefer-default-export
@@ -7,12 +8,34 @@ export const resolver = {
     missions: () => Mission.findAll(),
   },
   Mutation: {
-    createMission: async (r, { mission }, c) => {
-      if (!c.user) {
-        throw new Error();
+    createMission: authenticatedOnly(async ({ mission }) => {
+      const { id, date, ...rest } = mission;
+
+      const data = {
+        dateFrom: date.from,
+        dateTo: date.to,
+        dateType: date.type,
+        ...rest,
+      };
+
+      if (id) {
+        return Mission.update(data, { where: { id } }).then(() => Mission.findById(id));
       }
 
-      return Mission.build(mission).save();
-    },
+      return Mission.build(data).save();
+    }),
+    deleteMission: authenticatedOnly(async ({ id }) =>
+      Mission.destroy({ where: { id } }),
+    ),
+    deleteMissions: authenticatedOnly(async () =>
+      Mission.destroy({ truncate: true }),
+    ),
+  },
+  Mission: {
+    date: (mission) => ({
+      from: mission.dateFrom,
+      to: mission.dateTo,
+      type: mission.dateType,
+    }),
   },
 };

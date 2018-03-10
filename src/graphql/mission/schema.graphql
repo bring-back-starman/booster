@@ -10,7 +10,14 @@ type Mission {
     description: String
 }
 
+type DateRange {
+    from: String
+    to: String
+    type: String
+}
+
 input NewMission {
+    id: ID
     name: String
     launchNumber: Int
     missionNumber: Int
@@ -27,12 +34,6 @@ input NewDateRange {
     type: String
 }
 
-type DateRange {
-    from: String
-    to: String
-    type: String
-}
-
 type Query {
     mission(id: ID!): Mission
     missions: [Mission]
@@ -40,4 +41,6 @@ type Query {
 
 type Mutation {
     createMission(mission: NewMission!): Mission
+    deleteMission(id: ID!): Boolean
+    deleteMissions: Boolean
 }
