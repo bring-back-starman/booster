@@ -12,9 +12,9 @@ export const resolver = {
       const { id, date, ...rest } = mission;
 
       const data = {
-        dateFrom: date.from,
-        dateTo: date.to,
-        dateType: date.type,
+        dateFrom: date && date.from,
+        dateTo: date && date.to,
+        dateType: date && date.type,
         ...rest,
       };
 

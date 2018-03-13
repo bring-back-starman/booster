@@ -1,0 +1,32 @@
+type Orbit {
+    acronym: String!
+    name: String
+    altitudeKm: Altitude
+    description: String
+}
+
+type Altitude {
+    min: Int
+    max: Int
+}
+
+input NewOrbit {
+    acronym: String!
+    name: String
+    altitudeKm: NewAltitude
+    description: String
+}
+
+input NewAltitude {
+    min: Int
+    max: Int
+}
+
+type Query {
+    orbit(acronym: String!): Orbit
+    orbits: [Orbit]
+}
+
+type Mutation {
+    createOrbit(orbit: NewOrbit!): Orbit
+}
