@@ -8,9 +8,9 @@ const executableSchema = makeExecutableSchema({
   resolvers: resolver,
 });
 
-export default req => ({
+export default (req) => ({
   schema: executableSchema,
   context: {
     user: req.user,
-  }
+  },
 });

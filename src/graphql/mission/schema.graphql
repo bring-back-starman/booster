@@ -34,9 +34,14 @@ input NewDateRange {
     type: String
 }
 
+enum MissionType {
+    PAST
+    UPCOMING
+}
+
 type Query {
     mission(id: ID!): Mission
-    missions: [Mission]
+    missions(limit: Int, offset: Int, page: Int, type: MissionType = UPCOMING): [Mission]
 }
 
 type Mutation {

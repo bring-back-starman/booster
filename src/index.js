@@ -22,7 +22,10 @@ const start = async () => {
   app.server = http.createServer(app);
 
   app.use(morgan(config.logs));
-  app.use(cors());
+  app.use(cors({
+    maxAge: 3600,
+    optionsSuccessStatus: 200,
+  }));
   app.use(helmet());
   app.use(compress());
   app.use(express.json());

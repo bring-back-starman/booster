@@ -41,7 +41,7 @@ const Mission = sequelize.define('mission', {
     field: 'launch_video',
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(1000),
   },
 });
 
