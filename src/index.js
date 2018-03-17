@@ -21,15 +21,12 @@ const start = async () => {
   const app = express();
   app.server = http.createServer(app);
 
-  app.use(morgan(config.logs));
-  app.use(cors({
-    maxAge: 3600,
-    optionsSuccessStatus: 200,
-  }));
-  app.use(helmet());
-  app.use(compress());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(morgan(config.logs));
+  app.use(helmet());
+  app.use(compress());
+  app.use(cors());
   app.use(auth.initialize());
 
   app.use('/graphql', auth.authenticate(), graphqlExpress(graphQLOptions));
