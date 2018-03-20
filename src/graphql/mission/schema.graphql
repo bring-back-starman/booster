@@ -4,7 +4,7 @@ type Mission {
     launchNumber: Int
     missionNumber: Int
     date: DateRange
-    missionOutcome: String
+    outcome: String
     patchUrl: String
     launchVideo: String
     description: String
@@ -22,7 +22,7 @@ input NewMission {
     launchNumber: Int
     missionNumber: Int
     date: NewDateRange
-    missionOutcome: String
+    outcome: String
     patchUrl: String
     launchVideo: String
     description: String

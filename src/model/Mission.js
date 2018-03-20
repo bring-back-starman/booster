@@ -25,9 +25,9 @@ const Mission = sequelize.define('mission', {
     type: Sequelize.STRING,
     field: 'date_type',
   },
-  missionOutcome: {
+  outcome: {
     type: Sequelize.STRING,
-    field: 'mission_outcome',
+    field: 'outcome',
   },
   patchUrl: {
     type: Sequelize.STRING,
