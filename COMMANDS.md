@@ -28,3 +28,8 @@ $ docker rm $(docker ps -a -q)
 docker ps --format '{{.Names}}' | grep booster_postgres // Get the NAME of the container
 docker exec -it <container_name> psql -U booster -d booster
 ```
+
+## List tables
+```sql
+SELECT * FROM pg_catalog.pg_tables;
+```
