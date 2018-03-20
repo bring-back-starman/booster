@@ -21,3 +21,10 @@ $ docker rm <CONTAINER_ID>
 // Delete all containers
 $ docker rm $(docker ps -a -q)
 ```
+
+# Postgres
+## SQL CLI
+```
+docker ps | grep booster_postgres // Get the NAME of the container
+docker exec -it <container_name> psql -U booster -d booster
+```
