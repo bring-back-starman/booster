@@ -39,9 +39,14 @@ enum MissionType {
     UPCOMING
 }
 
+enum OrderType {
+    ASC
+    DESC
+}
+
 type Query {
     mission(id: ID!): Mission
-    missions(limit: Int, offset: Int, page: Int, type: MissionType = UPCOMING): [Mission]
+    missions(limit: Int, offset: Int, page: Int, type: MissionType = UPCOMING, order: OrderType = DESC): [Mission]
 }
 
 type Mutation {

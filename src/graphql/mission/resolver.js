@@ -5,17 +5,21 @@ import { authenticatedOnly } from '../helpers';
 export const resolver = {
   Query: {
     mission: (r, { id }) => Mission.findById(id),
-    missions: (r, { limit = 10, offset, page = 1, type }) => {
+    missions: (r, { limit = 10, offset, page = 1, type, order }) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const dateFrom = type === 'UPCOMING' ? { $gte: today } : { $lt: today };
 
+      console.log('order:', order);
       return Mission.findAll({
         where: {
           dateFrom,
         },
         limit,
         offset: offset || ((page - 1) * limit),
+        order: [
+          ['date_from', order]
+        ],
       });
     },
   },
