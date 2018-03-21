@@ -1,17 +1,14 @@
 FROM node:9
 
-RUN apt-get update
-RUN apt-get upgrade -y
+# Set work directory to /www
+WORKDIR /usr/src/app
 
 # Install app dependencies
-COPY package.json /www/package.json
-RUN cd /www; npm install
+COPY package.json yarn.lock ./
+RUN npm install -g babel; npm install;
 
 # Copy app source
-COPY . /www
-
-# Set work directory to /www
-WORKDIR /www
+COPY . ./
 
 # expose the port to outside world
 EXPOSE 3000

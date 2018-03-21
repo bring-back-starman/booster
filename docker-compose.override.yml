@@ -8,13 +8,15 @@ services:
       - /data/postgres
     restart: always
     env_file:
-      - .env.production
+      - .env.development
   booster:
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    volumes:
+      - ".:/www"
     restart: on-failure
     depends_on:
       - postgres
