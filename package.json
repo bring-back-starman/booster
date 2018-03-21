@@ -9,7 +9,7 @@
     "start": "node dist",
     "prestart": "npm run -s build",
     "test": "eslint src",
-    "docker-dev": "docker-compose run --service-ports --rm booster npm run dev",
+    "docker-dev": "docker-compose -f docker-compose.override.yml run --service-ports --rm booster npm run dev",
     "docker-prod": "docker-compose up -d"
   },
   "repository": "bring-back-starman/booster",
