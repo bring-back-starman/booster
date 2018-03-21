@@ -1,6 +1,7 @@
 type Mission {
     id: ID!
     name: String
+    vehicle: Vehicle
     launchNumber: Int
     missionNumber: Int
     date: DateRange
@@ -8,6 +9,7 @@ type Mission {
     patchUrl: String
     launchVideo: String
     description: String
+    orbit: String
 }
 
 type DateRange {
@@ -19,6 +21,7 @@ type DateRange {
 input NewMission {
     id: ID
     name: String
+    vehicle: Vehicle
     launchNumber: Int
     missionNumber: Int
     date: NewDateRange
@@ -26,6 +29,7 @@ input NewMission {
     patchUrl: String
     launchVideo: String
     description: String
+    orbit: String
 }
 
 input NewDateRange {
@@ -37,6 +41,14 @@ input NewDateRange {
 enum MissionType {
     PAST
     UPCOMING
+    ALL
+}
+
+enum Vehicle {
+    F1
+    F5
+    F9
+    FH
 }
 
 enum OrderType {
@@ -46,7 +58,7 @@ enum OrderType {
 
 type Query {
     mission(id: ID!): Mission
-    missions(limit: Int, offset: Int, page: Int, type: MissionType = UPCOMING, order: OrderType = DESC): [Mission]
+    missions(limit: Int = 10, offset: Int, page: Int = 1, type: MissionType = UPCOMING, order: OrderType = DESC): [Mission]
 }
 
 type Mutation {

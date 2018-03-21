@@ -2,23 +2,11 @@ import Sequelize from 'sequelize';
 import sequelize from '../config/sequelize';
 
 const Orbit = sequelize.define('orbit', {
-  acronym: {
-    type: Sequelize.STRING,
-  },
-  name: {
-    type: Sequelize.STRING,
-  },
-  altitudeMinKm: {
-    type: Sequelize.INTEGER,
-    field: 'altitude_min_km',
-  },
-  altitudeMaxKm: {
-    type: Sequelize.INTEGER,
-    field: 'altitude_max_km',
-  },
-  description: {
-    type: Sequelize.STRING,
-  },
+  acronym: Sequelize.STRING,
+  name: Sequelize.STRING,
+  altitudeMinKm: Sequelize.INTEGER,
+  altitudeMaxKm: Sequelize.INTEGER,
+  description: Sequelize.TEXT,
 });
 
 export default Orbit;

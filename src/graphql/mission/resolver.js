@@ -5,21 +5,25 @@ import { authenticatedOnly } from '../helpers';
 export const resolver = {
   Query: {
     mission: (r, { id }) => Mission.findById(id),
-    missions: (r, { limit = 10, offset, page = 1, type, order }) => {
+    missions: (r, { limit, offset, page, type, order }) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const dateFrom = type === 'UPCOMING' ? { $gte: today } : { $lt: today };
+      let where = {};
+
+      switch (type) {
+        case 'UPCOMING':
+          where = { dateTo: { $gte: today } };
+          break;
+        case 'PAST':
+          where = { dateTo: { $lt: today } };
+      }
 
       console.log('order:', order);
       return Mission.findAll({
-        where: {
-          dateFrom,
-        },
+        where,
         limit,
         offset: offset || ((page - 1) * limit),
-        order: [
-          ['date_from', order]
-        ],
+        order: [['dateTo', order]],
       });
     },
   },
@@ -49,8 +53,8 @@ export const resolver = {
   },
   Mission: {
     date: (mission) => ({
-      from: mission.dateFrom,
-      to: mission.dateTo,
+      from: mission.dateFrom && mission.dateFrom.toISOString(),
+      to: mission.dateTo && mission.dateTo.toISOString(),
       type: mission.dateType,
     }),
   },

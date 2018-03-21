@@ -17,7 +17,7 @@ import { db } from './init/db';
 
 
 const start = async () => {
-  await db.sync();
+  await db.sync({ force: true });
   const app = express();
   app.server = http.createServer(app);
 

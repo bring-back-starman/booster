@@ -2,47 +2,19 @@ import Sequelize from 'sequelize';
 import sequelize from '../config/sequelize';
 
 const Mission = sequelize.define('mission', {
-  name: {
-    type: Sequelize.STRING,
-  },
-  launchNumber: {
-    type: Sequelize.INTEGER,
-    field: 'launch_number',
-  },
-  missionNumber: {
-    type: Sequelize.INTEGER,
-    field: 'mission_number',
-  },
-  dateFrom: {
-    type: Sequelize.DATE,
-    field: 'date_from',
-  },
-  dateTo: {
-    type: Sequelize.DATE,
-    field: 'date_to',
-  },
-  dateType: {
-    type: Sequelize.STRING,
-    field: 'date_type',
-  },
-  outcome: {
-    type: Sequelize.STRING,
-    field: 'outcome',
-  },
-  patchUrl: {
-    type: Sequelize.STRING,
-    field: 'patch_url',
-  },
-  links: {
-    type: Sequelize.JSON,
-  },
-  launchVideo: {
-    type: Sequelize.STRING,
-    field: 'launch_video',
-  },
-  description: {
-    type: Sequelize.STRING(1000),
-  },
+  name: Sequelize.STRING,
+  launchNumber: Sequelize.INTEGER,
+  missionNumber: Sequelize.INTEGER,
+  dateFrom: Sequelize.DATE,
+  dateTo: Sequelize.DATE,
+  dateType: Sequelize.STRING,
+  vehicle: Sequelize.STRING,
+  outcome: Sequelize.STRING,
+  patchUrl: Sequelize.TEXT,
+  links: Sequelize.JSON,
+  launchVideo: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  orbit: Sequelize.STRING,
 });
 
 export default Mission;
