@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json yarn.lock ./
-RUN npm install -g babel; npm install;
+RUN npm install -g babel-cli; npm install;
 
 # Copy app source
 COPY . ./

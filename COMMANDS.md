@@ -22,6 +22,11 @@ $ docker rm <CONTAINER_ID>
 $ docker rm $(docker ps -a -q)
 ```
 
+## Log 
+```
+$ docker logs -f --tail 50 <CONTAINER>
+```
+
 # Postgres
 ## SQL CLI
 ```
